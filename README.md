@@ -14,6 +14,7 @@ Since i've been getting trash loot in dungeon quest i wanted to test my luck wit
 ![Satisfaction4](https://i.gyazo.com/a4f712990334ec06534fc99348f9e011.png)
 
 `For this one i had like 0.0499% to happen`
+
 ![Satisfaction5](https://i.gyazo.com/3fac722abf2bc9ffe8e2ccb32dd9bbbf.png)
 
 ### How to add an Item
