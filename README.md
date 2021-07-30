@@ -8,8 +8,11 @@ Since i've been getting trash loot in dungeon quest i wanted to test my luck wit
 
 ### Some satisfactions
 ![Satisfaction2](https://i.gyazo.com/22668d9efb16a6f32cf1e2da6bedb4f1.png)
+
 ![Satisfaction3](https://i.gyazo.com/82224acd4275899bac17631d8f312b2a.png)
+
 ![Satisfaction4](https://i.gyazo.com/a4f712990334ec06534fc99348f9e011.png)
+
 ![Satisfaction5](https://i.gyazo.com/3fac722abf2bc9ffe8e2ccb32dd9bbbf.png)
 
 ### How to add an Item
