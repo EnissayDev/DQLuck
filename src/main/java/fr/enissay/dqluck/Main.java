@@ -7,7 +7,9 @@ import fr.enissay.dqluck.items.ItemType;
 import fr.enissay.dqluck.utils.Logger;
 import net.andreinc.mockneat.MockNeat;
 import net.andreinc.mockneat.unit.objects.Probabilities;
+import org.fusesource.jansi.Ansi;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -110,8 +112,10 @@ public class Main {
                 }
                 result.add(newInstance);
 
+                final String s = Ansi.ansi().fgRgb(128, 128, 128) + "|" + Ansi.ansi().reset();
+
                 if (i == 1) System.out.println("--------------------------------------------------");
-                System.out.println("You got... " + newInstance.toDrop() + " | Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " | Type: " + newInstance.getType() + " | Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/"));
+                System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/"));
                 if (i % multiplier == 0) System.out.println("--------------------| RUN #" + (i / multiplier) + " |--------------------");
             }
 
