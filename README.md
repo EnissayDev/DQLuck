@@ -7,7 +7,6 @@ Since i've been getting trash loot in dungeon quest i wanted to test my luck wit
 ![Example](https://i.gyazo.com/50dccc6f0e4bf65e37328395351d37fd.png)
 
 ### Some satisfactions
-![Satisfaction1](https://i.gyazo.com/15ab7fce319a7aab69822834b126b695.png)
 ![Satisfaction2](https://i.gyazo.com/22668d9efb16a6f32cf1e2da6bedb4f1.png)
 ![Satisfaction3](https://i.gyazo.com/82224acd4275899bac17631d8f312b2a.png)
 ![Satisfaction4](https://i.gyazo.com/a4f712990334ec06534fc99348f9e011.png)
