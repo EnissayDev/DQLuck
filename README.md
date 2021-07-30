@@ -1,7 +1,7 @@
 # DQLuck
 Since i've been getting trash loot in dungeon quest i wanted to test my luck with ef items (for now)
 
-`REMINDER: The chances are not 100% accurate for now because no one knows them`
+`REMINDER: The chances are not 100% accurate for now because no one knows them and I tried to be the most accurate possible the legendaries may be accurate but for Eldenbark sets i'm pretty sure they're not for now`
 
 ### Example
 ![Example](https://i.gyazo.com/f2868038e3594d19cba967b112a1debc.png)
