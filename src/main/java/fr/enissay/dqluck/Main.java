@@ -97,6 +97,7 @@ public class Main {
 
                 scanner.close();
             }
+            System.out.println("");
 
             int multiplier = withExtraitem ? 3 : 2;
 
@@ -110,10 +111,11 @@ public class Main {
                 result.add(newInstance);
 
                 if (i == 1) System.out.println("--------------------------------------------------");
-                System.out.println("You got... " + newInstance.toDrop() + " | chance to drop: " + newInstance.getChance() + "%");
+                System.out.println("You got... " + newInstance.toDrop() + " | Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " | Type: " + newInstance.getType() + " | Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/"));
                 if (i % multiplier == 0) System.out.println("--------------------| RUN #" + (i / multiplier) + " |--------------------");
             }
 
+            System.out.println("");
             Logger.logInfo("Result for " + runs + " runs in Enchanted Forest Nightmare: ");
             Logger.logInfo(ItemRarity.LEGENDARY.getColor() + "Legendaries: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size());
             Logger.logInfo(ItemRarity.EPIC.getColor() + "Epics: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.EPIC).collect(Collectors.toList()).size());
