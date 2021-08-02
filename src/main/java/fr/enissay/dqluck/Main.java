@@ -10,6 +10,7 @@ import org.fusesource.jansi.Ansi;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -111,10 +112,22 @@ public class Main {
                 result.add(newInstance);
 
                 final String s = Ansi.ansi().fgRgb(128, 128, 128) + "|" + Ansi.ansi().reset();
+                final List<DQItem> runsItems = new ArrayList<>();
 
                 if (i == 1) System.out.println("--------------------------------------------------");
+                if (i % 1 == 0) runsItems.add(result.get(i - 1));
                 System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/"));
-                if (i % multiplier == 0) System.out.println("--------------------| RUN #" + (i / multiplier) + " |--------------------");
+                if (i % multiplier == 0) {
+                    runsItems.forEach(dqItem -> {
+                        String runResult = Logger.cleanCodes("/r/None :(");
+                        if(runsItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() == 1) runResult = Logger.cleanCodes("/g/Good");
+                        else if(runsItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() > 1) runResult = Logger.cleanCodes("/m/OMGGGGG");
+
+                        Logger.logCustom("/bb/Result for legendaries: " + runResult + "/rs/");
+                    });
+                    System.out.println("--------------------| RUN #" + (i / multiplier) + " |--------------------");
+                    runsItems.clear();
+                }
             }
 
             System.out.println("");
