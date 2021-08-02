@@ -5,8 +5,6 @@ import fr.enissay.dqluck.items.DQItemsManager;
 import fr.enissay.dqluck.items.ItemRarity;
 import fr.enissay.dqluck.items.ItemType;
 import fr.enissay.dqluck.utils.Logger;
-import net.andreinc.mockneat.MockNeat;
-import net.andreinc.mockneat.unit.objects.Probabilities;
 import org.fusesource.jansi.Ansi;
 
 import java.awt.*;
@@ -157,7 +155,7 @@ public class Main {
         }
     }
 
-    public static String format(double number){
+    private static String format(double number){
         String[] suffix = new String[]{"K","M","B","T"};
         int size = (number != 0) ? (int) Math.log10(number) : 0;
         if (size >= 3){
@@ -170,7 +168,7 @@ public class Main {
         return result;
     }
 
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+    private static <T extends Enum<?>> T randomEnum(Class<T> clazz){
         Random random = new Random();
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
@@ -182,7 +180,7 @@ public class Main {
      * @return a random key-object from the map with a chance equal to its weight/totalWeight.
      * @throws IllegalArgumentException if total weight is not positive.
      */
-    public static <E> E getRandomWeighted(Map<E, ? extends Number> balancedObjects) throws IllegalArgumentException {
+    private static <E> E getRandomWeighted(Map<E, ? extends Number> balancedObjects) throws IllegalArgumentException {
         double totalWeight = balancedObjects.values().stream().mapToInt(Number::intValue).sum(); // Java 8
 
         if (totalWeight <= 0)
@@ -203,7 +201,7 @@ public class Main {
         return dqItemsManager;
     }
 
-    public static void add(final DQItem dqItem){
+    private static void add(final DQItem dqItem){
         getDqItemsManager().addItem(dqItem);
     }
 }

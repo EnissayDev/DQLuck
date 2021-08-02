@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DQLuck:jar">
+    <output-path>$PROJECT_DIR$/jar</output-path>
+    <root id="archive" name="DQLuck.jar">
+      <element id="module-output" name="DQLuck" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/2.3.2/jansi-2.3.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
