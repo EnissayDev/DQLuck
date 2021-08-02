@@ -4,15 +4,14 @@ import fr.enissay.dqluck.items.DQItem;
 import fr.enissay.dqluck.items.DQItemsManager;
 import fr.enissay.dqluck.items.ItemRarity;
 import fr.enissay.dqluck.items.ItemType;
+import fr.enissay.dqluck.run.DQRun;
 import fr.enissay.dqluck.utils.Logger;
 import org.fusesource.jansi.Ansi;
 
-import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -84,6 +83,7 @@ public class Main {
             });
 
             int runs = 1;
+            long delay = 0L;
             boolean withExtraitem = false;
 
             final Scanner scanner = new Scanner(System.in);
@@ -95,12 +95,99 @@ public class Main {
                 String input = scanner.next();
                 if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) withExtraitem = true;
                 else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")) withExtraitem = false;
+            }
+            Logger.logInput("Please enter the number of delay in milliseconds (if you don't want any delay just set to 0):");
+            if (scanner.hasNext()) {
+                long input = scanner.nextLong();
+                delay = input;
 
                 scanner.close();
             }
             System.out.println("");
 
             int multiplier = withExtraitem ? 3 : 2;
+
+            final LinkedList<DQItem> result = new LinkedList<>();
+            final List<DQRun> dqRuns = new ArrayList<>();
+            final String s = Ansi.ansi().fgRgb(128, 128, 128) + "|" + Ansi.ansi().reset();
+
+            for (int i = 1; i < runs + 1; i++) {
+                final LinkedList<DQItem> dqItems = new LinkedList<>();
+                for (int f = 1; f < multiplier + 1; f++) {
+                    final DQItem newInstance = getRandomWeighted(map);
+                    if (newInstance.shouldChangeRarity()) {
+                        final ItemRarity randomRarity = randomEnum(ItemRarity.class);
+                        if (randomRarity != ItemRarity.LEGENDARY) newInstance.setRarity(randomRarity);
+                    }
+                    // To prevent duplicated Items
+                    if (!dqItems.contains(newInstance))
+                        dqItems.add(newInstance);
+                    else dqItems.add(new DQItem(newInstance.getName(), newInstance.getRarity(), newInstance.getType(), newInstance.getChance(), newInstance.shouldChangeRarity()));
+                    result.add(newInstance);
+                }
+                dqRuns.add(new DQRun(withExtraitem, dqItems));
+            }
+            long finalDelay = delay;
+            dqRuns.forEach(theRuns -> {
+                LinkedList<DQItem> theItems = theRuns.getItems();
+
+                System.out.println("--------------------| RUN #" + (dqRuns.indexOf(theRuns) + 1) + " |--------------------");
+                final AtomicReference<String> runResult = new AtomicReference<>("");
+
+                /*if (theRuns.isWithExtraItem()) theItems = Arrays.asList(item1, item2, item3);
+                else theItems = Arrays.asList(item1, item2);*/
+
+                theItems.forEach(newInstance -> {
+                    System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/") + " " + s + " Index: " + theRuns.getItems().indexOf(newInstance));
+                });
+
+                theItems.forEach(dqItem -> {
+                    //Logger.logDebug("ITEM: " + dqItem.toDrop() + " - INDEX: " + theItems.indexOf(dqItem));
+
+                    runResult.set(Logger.cleanCodes("/r/None :("));
+                    if(theItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() == 1) runResult.set(Logger.cleanCodes("/g/Good"));
+                    else if(theItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() > 1) runResult.set(Logger.cleanCodes("/m/OMGGGGG"));
+                });
+                Logger.logCustom("/bb/Result for legendaries: " + runResult + "/rs/");
+                try {
+                    Thread.sleep(finalDelay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            System.out.println("--------------------------------------------------");
+            System.out.println("");
+            Logger.logInfo("Result for " + runs + " runs in Enchanted Forest Nightmare: ");
+            Logger.logInfo(ItemRarity.LEGENDARY.getColor() + "Legendaries: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size());
+            Logger.logInfo(ItemRarity.EPIC.getColor() + "Epics: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.EPIC).collect(Collectors.toList()).size());
+            Logger.logInfo(ItemRarity.RARE.getColor() + "Rares: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.RARE).collect(Collectors.toList()).size());
+            Logger.logInfo(ItemRarity.UNCOMMON.getColor() + "Uncommons: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.UNCOMMON).collect(Collectors.toList()).size());
+            Logger.logInfo(ItemRarity.COMMON.getColor() + "Commons: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.COMMON).collect(Collectors.toList()).size());
+            System.out.println("");
+            final double chance = (runs * 100) / 101; // 101 cuz it's 100% that you'll have a legendary
+            Logger.logInfo("Chance to have a legendary every " + runs + " runs: " + (chance > 100 ? 100 : chance) + "%");
+            System.out.println("");
+            Logger.logCustom("/y/Gold earned: " + format(170000000.0 * runs));
+            Logger.logCustom("/y/Gold earned with 2x Gold Game Pass: " + format(340000000.0 * runs));
+            System.out.println("");
+            Logger.logCustom("/m/XP earned: " + format(11280000000.0 * runs));
+            Logger.logCustom("/m/XP earned with VIP: " + format(13536000000.0 * runs));
+            Logger.logCustom("/m/XP earned with Boost: " + format(22560000000.0 * runs));
+            Logger.logCustom("/m/XP earned with VIP+Boost: " + format(24816000000.0 * runs));
+            System.out.println("");
+
+            int luck = 0;
+
+            String resultLuck = Logger.cleanCodes("/r/") + "Not lucky";
+            luck+=result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size();
+            luck+=result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.EPIC && (dqItem.getName().contains("Eldenbark Warrior") || dqItem.getName().contains("Eldenbark Mage") || dqItem.getName().contains("Eldenbark Guardian"))).collect(Collectors.toList()).size();
+
+            if (luck == 1) resultLuck = Logger.cleanCodes("/g/") + "Lucky";
+            else if (luck >= 2) resultLuck = Logger.cleanCodes("/m/") + "Very Lucky";
+
+            Logger.logInfo("This run was : " + resultLuck);
+
+            /*int multiplier = withExtraitem ? 3 : 2;
 
             LinkedList<DQItem> result = new LinkedList<>();
             for (int i = 1; i < (runs * multiplier) + 1; i++){
@@ -115,10 +202,12 @@ public class Main {
                 final List<DQItem> runsItems = new ArrayList<>();
 
                 if (i == 1) System.out.println("--------------------------------------------------");
-                if (i % 1 == 0) runsItems.add(result.get(i - 1));
+                if (i % 1 == 0 || i % 2 == 1) runsItems.add(result.get(i - 1));
                 System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/"));
                 if (i % multiplier == 0) {
                     runsItems.forEach(dqItem -> {
+                        Logger.logInfo("ITEM: " + dqItem.toDrop());
+
                         String runResult = Logger.cleanCodes("/r/None :(");
                         if(runsItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() == 1) runResult = Logger.cleanCodes("/g/Good");
                         else if(runsItems.stream().filter(runItem -> runItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size() > 1) runResult = Logger.cleanCodes("/m/OMGGGGG");
@@ -159,7 +248,7 @@ public class Main {
             if (luck == 1) resultLuck = Logger.cleanCodes("/g/") + "Lucky";
             else if (luck >= 2) resultLuck = Logger.cleanCodes("/m/") + "Very Lucky";
 
-            Logger.logInfo("This run was : " + resultLuck);
+            Logger.logInfo("This run was : " + resultLuck);*/
 
         }).start();
 
