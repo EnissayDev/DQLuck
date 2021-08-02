@@ -3,8 +3,8 @@ Since i've been getting trash loot in dungeon quest i wanted to test my luck wit
 
 `REMINDER: The chances are not 100% accurate for now because no one knows them and I tried to be the most accurate possible the legendaries may be accurate but for Eldenbark sets i'm pretty sure they're not for now`
 
-### Latest Release
-- `Link`: **![Release here](https://github.com/EnissayDev/DQLuck/releases/latest)**
+# Latest Release
+`Link`: ![Release here](https://github.com/EnissayDev/DQLuck/releases/latest)
 
 ### Example
 ![Example](https://i.gyazo.com/50dccc6f0e4bf65e37328395351d37fd.png)
