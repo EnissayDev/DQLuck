@@ -28,12 +28,12 @@ public class Main {
             add(new DQItem("Eldenbark Greatsword", ItemRarity.LEGENDARY, ItemType.WEAPON, 0.1996, false));
             add(new DQItem("Eldenbark Greatstaff", ItemRarity.LEGENDARY, ItemType.WEAPON, 0.1996, false));
 
-            add(new DQItem("Crystalline Shard Staff", ItemRarity.COMMON, ItemType.WEAPON, 4.0, true));
-            add(new DQItem("Overgrown War Scythe", ItemRarity.COMMON, ItemType.WEAPON, 4.0, true));
-            add(new DQItem("Forest Vine Spellblade", ItemRarity.COMMON, ItemType.WEAPON, 6.0, true));
-            add(new DQItem("Forest Vine Hatchet", ItemRarity.COMMON, ItemType.WEAPON, 6.0, true));
-            add(new DQItem("Enchanted Shard Staff", ItemRarity.COMMON, ItemType.WEAPON, 8.0, true));
-            add(new DQItem("Enchanted Shard War Axe", ItemRarity.COMMON, ItemType.WEAPON, 8.0, true));
+            add(new DQItem("Crystalline Shard Staff", ItemRarity.COMMON, ItemType.WEAPON, 2.0, true));
+            add(new DQItem("Overgrown War Scythe", ItemRarity.COMMON, ItemType.WEAPON, 2.0, true));
+            add(new DQItem("Forest Vine Spellblade", ItemRarity.COMMON, ItemType.WEAPON, 4.0, true));
+            add(new DQItem("Forest Vine Hatchet", ItemRarity.COMMON, ItemType.WEAPON, 4.0, true));
+            add(new DQItem("Enchanted Shard Staff", ItemRarity.COMMON, ItemType.WEAPON, 6.0, true));
+            add(new DQItem("Enchanted Shard War Axe", ItemRarity.COMMON, ItemType.WEAPON, 6.0, true));
 
             // Armors
             add(new DQItem("Eldenbark Warrior Helmet", ItemRarity.COMMON, ItemType.ARMOR, 0.2096, true));
@@ -45,23 +45,23 @@ public class Main {
             add(new DQItem("Eldenbark Guardian Helmet", ItemRarity.COMMON, ItemType.ARMOR, 0.2096, true));
             add(new DQItem("Eldenbark Guardian Armor", ItemRarity.COMMON, ItemType.ARMOR, 0.2096, true));
 
-            add(new DQItem("Crystalline Warrior Helmet", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
-            add(new DQItem("Crystalline Warrior Armor", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
+            add(new DQItem("Crystalline Warrior Helmet", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
+            add(new DQItem("Crystalline Warrior Armor", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
 
-            add(new DQItem("Crystalline Mage Helmet", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
-            add(new DQItem("Crystalline Mage Armor", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
+            add(new DQItem("Crystalline Mage Helmet", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
+            add(new DQItem("Crystalline Mage Armor", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
 
-            add(new DQItem("Crystalline Guardian Helmet", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
-            add(new DQItem("Crystalline Guardian Armor", ItemRarity.COMMON, ItemType.ARMOR, 8.0, true));
+            add(new DQItem("Crystalline Guardian Helmet", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
+            add(new DQItem("Crystalline Guardian Armor", ItemRarity.COMMON, ItemType.ARMOR, 5.0, true));
 
             // Spells
             add(new DQItem("Enhanced Inner Rage", ItemRarity.LEGENDARY, ItemType.SPELL, 0.025, false));
             add(new DQItem("Enhanced Inner Focus", ItemRarity.LEGENDARY, ItemType.SPELL, 0.025, false));
 
-            add(new DQItem("Crystalline Cannon", ItemRarity.EPIC, ItemType.SPELL, 8.0, false));
-            add(new DQItem("Wind Blast", ItemRarity.EPIC, ItemType.SPELL, 8.0, false));
-            add(new DQItem("Agony Orbs", ItemRarity.EPIC, ItemType.SPELL, 8.0, false));
-            add(new DQItem("Lightning Burst", ItemRarity.EPIC, ItemType.SPELL, 8.0, false));
+            add(new DQItem("Crystalline Cannon", ItemRarity.EPIC, ItemType.SPELL, 4.0, false));
+            add(new DQItem("Wind Blast", ItemRarity.EPIC, ItemType.SPELL, 4.0, false));
+            add(new DQItem("Agony Orbs", ItemRarity.EPIC, ItemType.SPELL, 4.0, false));
+            add(new DQItem("Lightning Burst", ItemRarity.EPIC, ItemType.SPELL, 4.0, false));
 
             /*LinkedList<Double> list = new LinkedList<>();
             for (double count : getDqItemsManager().getItems().stream().map(DQItem::getChance).collect(Collectors.toList()))
@@ -77,10 +77,10 @@ public class Main {
             });*/
 
             final Map<DQItem, Double> map = new HashMap<>();
+            final Map<ItemRarity, Double> rarityMap = new HashMap<>();
 
-            getDqItemsManager().getItems().forEach(items -> {
-                map.put(items, items.getChance());
-            });
+            getDqItemsManager().getItems().forEach(items -> map.put(items, items.getChance()));
+            Arrays.stream(ItemRarity.values()).forEach(itemRarity -> rarityMap.put(itemRarity, itemRarity.getChance()));
 
             int runs = 1;
             long delay = 0L;
@@ -138,7 +138,7 @@ public class Main {
                 else theItems = Arrays.asList(item1, item2);*/
 
                 theItems.forEach(newInstance -> {
-                    System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/") + " " + s + " Index: " + theRuns.getItems().indexOf(newInstance));
+                    System.out.println("You got... " + newInstance.toDrop() + " " + s + " Rarity: " + newInstance.getRarity().getColor() + newInstance.getRarity().getName() + Logger.cleanCodes("/rs/") + " " + s + " Type: " + newInstance.getType() + " " + s + " Chance to drop/Chance for rarity: " + Logger.cleanCodes("/bb/") + newInstance.getChance() + "%" + Logger.cleanCodes("/rs/") + "/" + Logger.cleanCodes("/bb/") + newInstance.getRarity().getChance() * 100 + "%" + Logger.cleanCodes("/rs/") + " " + s + " Index: " + theRuns.getItems().indexOf(newInstance));
                 });
 
                 theItems.forEach(dqItem -> {
@@ -158,11 +158,29 @@ public class Main {
             System.out.println("--------------------------------------------------");
             System.out.println("");
             Logger.logInfo("Result for " + runs + " runs in Enchanted Forest Nightmare: ");
+            // Legendaries
             Logger.logInfo(ItemRarity.LEGENDARY.getColor() + "Legendaries: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.LEGENDARY).collect(Collectors.toList()).size());
+            Arrays.stream(ItemType.values()).forEach(types -> Logger.logCustom(" - /b/" + types.name() + ": /rs/" + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.LEGENDARY && dqItem.getType() == types).collect(Collectors.toList()).size()));
+            System.out.println("");
+
+            // Epics
             Logger.logInfo(ItemRarity.EPIC.getColor() + "Epics: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.EPIC).collect(Collectors.toList()).size());
+            Arrays.stream(ItemType.values()).forEach(types -> Logger.logCustom(" - /b/" + types.name() + ": /rs/" + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.EPIC && dqItem.getType() == types).collect(Collectors.toList()).size()));
+            System.out.println("");
+
+            // Rares
             Logger.logInfo(ItemRarity.RARE.getColor() + "Rares: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.RARE).collect(Collectors.toList()).size());
+            Arrays.stream(ItemType.values()).forEach(types -> Logger.logCustom(" - /b/" + types.name() + ": /rs/" + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.RARE && dqItem.getType() == types).collect(Collectors.toList()).size()));
+            System.out.println("");
+
+            // Uncommons
             Logger.logInfo(ItemRarity.UNCOMMON.getColor() + "Uncommons: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.UNCOMMON).collect(Collectors.toList()).size());
+            Arrays.stream(ItemType.values()).forEach(types -> Logger.logCustom(" - /b/" + types.name() + ": /rs/" + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.UNCOMMON && dqItem.getType() == types).collect(Collectors.toList()).size()));
+            System.out.println("");
+
+            // Commons
             Logger.logInfo(ItemRarity.COMMON.getColor() + "Commons: " + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.COMMON).collect(Collectors.toList()).size());
+            Arrays.stream(ItemType.values()).forEach(types -> Logger.logCustom(" - /b/" + types.name() + ": /rs/" + result.stream().filter(dqItem -> dqItem.getRarity() == ItemRarity.COMMON && dqItem.getType() == types).collect(Collectors.toList()).size()));
             System.out.println("");
             final double chance = (runs * 100) / 101; // 101 cuz it's 100% that you'll have a legendary
             Logger.logInfo("Chance to have a legendary every " + runs + " runs: " + (chance > 100 ? 100 : chance) + "%");
